@@ -1,0 +1,73 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: MSA_REF_BIZ_STOCK
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:mem:MSA;DB_CLOSE_DELAY=-1;LOCK_TIMEOUT=2500;AUTOCOMMIT=OFF;DATABASE_TO_UPPER=true;
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: HikariCP
+      read-only: false
+      connection-test-query: select 1
+  h2:
+    console:
+      enabled: true
+      path: /h2console
+      settings:
+        web-allow-others: true
+        trace: false
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+
+logging:
+  config: classpath:log4j2.xml
+
+springdoc:
+  version: v1.0.0
+  packages-to-scan: com.samsungsds
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    try-it-out-enabled: false
+    filter: false
+    syntax-highlight:
+      activated: true
+    operations-sorter: method
+    tag-sorter: alpha
+  api-docs:
+    path: /api-docs
+    groups:
+      enabled: true
+    cache:
+      disabled: true
+    default-consumes-media-type: application/json:charset=UTF-8
+    default-produces-media-type: application/json:charset=UTF-8
+
+#Kafka Configuration
+kafka:
+  server-url: localhost:9092
+  username: ""
+  password: ""
+  consumer:
+    group-id: msa-group
+    payment-success-topic: pub-payment-success
+    stock-success-topic: sub-stock-success
+    stock-failed-topic: sub-stock-failed
+    json-trusted-packages: com.samsungsds.msa.*
+  producer:
+    stock-success-topic: pub-stock-success
+    payment-success-topic: sub-payment-success
+    payment-failed-topic: sub-payment-failed

@@ -1,0 +1,6 @@
+rootProject.name = 'MSA_REF_PATTERN_SAGA'
+include 'MSA_REF_BIZ_ORDER'
+include 'MSA_REF_BIZ_STOCK'
+include 'MSA_REF_BIZ_PAYMENT'
+include 'MSA_REF_SAGA'
+
